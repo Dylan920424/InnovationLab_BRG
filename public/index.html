@@ -14,6 +14,9 @@
         <form class="main_contract">
             <textarea name="input" rows="20" cols="120" placeholder="Start your contract here:"></textarea>
             <input type="submit" value="Generate Next Clause">
+            <label for="maxToken">maxToken:</label>
+            <input type="range" id="maxToken" name="maxToken" min="0" max="1000" step="10" value="100">
+            <output id="maxTokenValue">100</output>
         </form>
     </div>
     <div class="ouput_clause">

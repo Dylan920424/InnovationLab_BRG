@@ -12,16 +12,26 @@ app.listen(port, () => {
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: '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',
+  apiKey: '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',
 });
 const openai = new OpenAIApi(configuration);
 
-async function generateResponse(input) {
+async function fixResponse(Instruction, Input) {
+  const response = await openai.createEdit({
+    model: "text-davinci-edit-001",
+    input: Input,
+    instruction: Instruction,
+  });
+
+  return response.data.choices[0].text;
+}
+
+async function generateResponse(input, maxTokens) {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: input,
       temperature: 0.6,
-      max_tokens: 100,
+      max_tokens: parseInt(maxTokens),
       top_p: 1,
       frequency_penalty: 1,
       presence_penalty: 1,
@@ -32,14 +42,33 @@ async function generateResponse(input) {
   
 app.post('/generate-next-clause', (req, res) => {
   const mainContract = req.body.main_contract;
-  generateResponse(mainContract)
+  const maxTokens = req.body.max_tokens;
+  console.log(maxTokens)
+  console.log(mainContract)
+  generateResponse(mainContract, maxTokens)
     .then(nextClause => {
-      res.send({ main_contract: mainContract, next_clause: nextClause });
+      res.send({ main_contract: mainContract, next_clause: nextClause});
+      console.log(nextClause)
     })
     .catch(error => {
       console.error(error);
       res.status(500).send({ error: 'Something went wrong' });
     });
 });
-  
-  
+
+app.post('/edit-clause', (req, res) => {
+  const Instruction = req.body.Instruction;
+  const Input = req.body.Input;
+  console.log(Instruction)
+  console.log(Input)
+  fixResponse(Instruction, Input)
+    .then(nextClause => {
+      res.send({ Input: Input, next_clause: nextClause});
+      console.log(nextClause)
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).send({ error: 'Something went wrong' });
+    });
+});
+
