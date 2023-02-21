@@ -55,3 +55,24 @@ $(document).ready(function () {
     $("#maxTokenValue").text($(this).val());
   });
 });
+
+$(document).ready(function() {
+  $('#format-form').submit(function(e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+      url: '/save-file',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        console.log('File uploaded successfully');
+        $("#file-input").val('')
+      },
+      error: function(error) {
+        console.log('Error uploading file');
+      }
+    });
+  });
+});

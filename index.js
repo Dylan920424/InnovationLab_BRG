@@ -5,6 +5,31 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
+const multer = require('multer');
+const path = require('path')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    const extension = path.extname(file.originalname); // Get the extension of the file
+    cb(null, 'format'+ extension); // Concatenate the original name with the timestamp and extension
+  }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/save-file', upload.single('file-input'), function(req, res) {
+  if (!req.file) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  console.log('File uploaded successfully:', req.file.filename);
+  res.status(200).send('File uploaded successfully.');
+});
+
+
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
@@ -12,7 +37,7 @@ app.listen(port, () => {
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: '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',
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
