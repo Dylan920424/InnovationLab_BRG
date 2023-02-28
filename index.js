@@ -37,9 +37,11 @@ app.listen(port, () => {
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
+
+var changes = [];
 
 async function fixResponse(Instruction, Input) {
   const response = await openai.createEdit({
@@ -47,7 +49,7 @@ async function fixResponse(Instruction, Input) {
     input: Input,
     instruction: Instruction,
   });
-
+  changes.push(Instruction)
   return response.data.choices[0].text;
 }
 
@@ -58,8 +60,8 @@ async function generateResponse(input, maxTokens) {
       temperature: 0.6,
       max_tokens: parseInt(maxTokens),
       top_p: 1,
-      frequency_penalty: 1,
-      presence_penalty: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
     });
   
     return response.data.choices[0].text;
@@ -86,6 +88,7 @@ app.post('/edit-clause', (req, res) => {
   const Input = req.body.Input;
   console.log(Instruction)
   console.log(Input)
+  console.log(changes)
   fixResponse(Instruction, Input)
     .then(nextClause => {
       res.send({ Input: Input, next_clause: nextClause});

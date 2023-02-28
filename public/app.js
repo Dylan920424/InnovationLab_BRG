@@ -33,7 +33,7 @@ $(document).ready(function() {
 $(document).ready(function() {
   $(".main_contract").submit(function(event) {
     event.preventDefault();
-    var text = "generate the next clause in this contract given the current contract:\n\n" + $(".main_contract textarea").val();
+    var text = "draft an employment agreement with the following information:\n\n" + $(".main_contract textarea").val() + "\n\nWith at least 2000 words";
     var tokens = parseInt($("#maxToken").val());
     $.ajax({
       url: "/generate-next-clause",

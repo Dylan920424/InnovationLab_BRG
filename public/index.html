@@ -12,11 +12,11 @@
 <body>
     <div class="input_box">
         <form class="main_contract">
-            <textarea name="input" rows="20" cols="120" placeholder="Start your contract here:"></textarea>
-            <input type="submit" value="Generate Next Clause">
+            <textarea name="input" rows="20" cols="120" placeholder="Enter your keywords here:"></textarea>
+            <input type="submit" value="Generate Contract">
             <label for="maxToken">Maximum amount of words:</label>
-            <input type="range" id="maxToken" name="maxToken" min="0" max="1000" step="10" value="100">
-            <output id="maxTokenValue">100</output>
+            <input type="range" id="maxToken" name="maxToken" min="1000" max="4000" step="100" value="1200">
+            <output id="maxTokenValue">1200</output>
         </form>
     </div>
     <div class="format">
@@ -28,10 +28,9 @@
     </div>
     <div class="ouput_clause">
         <form action="" class="next_clause">
-            <textarea name="input" rows="20" cols="120" placeholder="Your next caluse:"></textarea>
+            <textarea name="input" rows="20" cols="120" placeholder="Your generated contract:"></textarea>
             <input type="text" placeholder="Enter what you want changed" class="changes">
             <input type="submit" value="Apply Change" class="apply-change-button">
-            <input type="submit" value="Accept Caluse" class="accept-clause-button">
         </form>
     </div>
 </body>
