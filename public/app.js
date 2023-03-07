@@ -1,14 +1,4 @@
 $(document).ready(function() {
-    $(".accept-clause-button").click(function(event) {
-      event.preventDefault();
-      var text = $(".main_contract textarea").val();
-      text += "\n\n" + $(".next_clause textarea").val();
-      $(".main_contract textarea").val(text);
-      $(".next_clause textarea").val("");
-    });
-  });
-
-$(document).ready(function() {
     $(".apply-change-button").click(function(event) {
       event.preventDefault();
       var text = $(".next_clause textarea").val();
@@ -33,7 +23,20 @@ $(document).ready(function() {
 $(document).ready(function() {
   $(".main_contract").submit(function(event) {
     event.preventDefault();
-    var text = "draft an employment agreement with the following information:\n\n" + $(".main_contract textarea").val() + "\n\nWith at least 2000 words";
+    var x = "";
+    $("form :input").each(function() {
+      var input = $(this);
+      if (input.attr("type") == "radio") {
+        if (input.is(":checked")) {
+          x += input.attr("name") + ": " + input.val() + "\n";
+        }
+      } else if (input.attr("type") != "submit") {
+        if (input.val()) {
+          x += input.attr("name") + ": " + input.val() + "\n";
+        }
+      }
+    });
+    var text = "draft an employment agreement with the following information:\n\n" + x + "\n\nwith at least 2000 words.";
     var tokens = parseInt($("#maxToken").val());
     $.ajax({
       url: "/generate-next-clause",

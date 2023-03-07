@@ -37,7 +37,7 @@ app.listen(port, () => {
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "",
 });
 const openai = new OpenAIApi(configuration);
 
@@ -53,12 +53,12 @@ async function fixResponse(Instruction, Input) {
   return response.data.choices[0].text;
 }
 
-async function generateResponse(input, maxTokens) {
+async function generateResponse(input) {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: input,
-      temperature: 0.6,
-      max_tokens: parseInt(maxTokens),
+      temperature: 0.9,
+      max_tokens: 3000,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
@@ -69,10 +69,8 @@ async function generateResponse(input, maxTokens) {
   
 app.post('/generate-next-clause', (req, res) => {
   const mainContract = req.body.main_contract;
-  const maxTokens = req.body.max_tokens;
-  console.log(maxTokens)
   console.log(mainContract)
-  generateResponse(mainContract, maxTokens)
+  generateResponse(mainContract)
     .then(nextClause => {
       res.send({ main_contract: mainContract, next_clause: nextClause});
       console.log(nextClause)
