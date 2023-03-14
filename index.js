@@ -37,7 +37,7 @@ app.listen(port, () => {
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "",
 });
 const openai = new OpenAIApi(configuration);
 
