@@ -30,13 +30,15 @@ $(document).ready(function() {
         if (input.is(":checked")) {
           x += input.attr("name") + ": " + input.val() + "\n";
         }
+      } else if (input.attr("type") == "select-one") {
+        x += input.attr("name") + ": " + input.find("option:selected").text() + "\n";
       } else if (input.attr("type") != "submit") {
         if (input.val()) {
           x += input.attr("name") + ": " + input.val() + "\n";
         }
       }
     });
-    var text = "draft an employment agreement with the following information:\n\n" + x + "\n\nwith at least 2000 words.";
+    var text = "draft an employment agreement with the following information:\n\n" + x + "\n\nwith at least 3000 words";
     var tokens = parseInt($("#maxToken").val());
     $.ajax({
       url: "/generate-next-clause",
@@ -53,9 +55,17 @@ $(document).ready(function() {
   });
 });
 
+
 $(document).ready(function () {
-  $("#maxToken").on("input", function () {
-    $("#maxTokenValue").text($(this).val());
+  $("#jurisdiction").on("change", function () {
+    var selectedJurisdiction = $(this).val();
+    if (selectedJurisdiction == "california") {
+      $("#OPT-reminder").text("*this is a reminder for California");
+    } else if (selectedJurisdiction == "tennessee") {
+      $("#OPT-reminder").text("*this is a reminder for Tennessee");
+    } else {
+      $("#OPT-reminder").text("");
+    }
   });
 });
 

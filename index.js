@@ -37,7 +37,7 @@ app.listen(port, () => {
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
@@ -54,17 +54,16 @@ async function fixResponse(Instruction, Input) {
 }
 
 async function generateResponse(input) {
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: input,
-      temperature: 0.9,
-      max_tokens: 3000,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+    const GPT35TurboMessage = [
+      { role: "system", content: `You help lawyers to generate employee agreements` },
+      { role: "user", content: input },
+    ];  
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: GPT35TurboMessage,
     });
   
-    return response.data.choices[0].text;
+    return response.data.choices[0].message.content;
   }
   
 app.post('/generate-next-clause', (req, res) => {
