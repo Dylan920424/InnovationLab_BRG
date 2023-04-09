@@ -12,7 +12,7 @@ select {
 
 input[type=submit] {
   width: 30%;
-  background-color: #a11212;
+  background-color: #663399;
   color: white;
   padding: 12px 20px;
   margin: 8px 0;
@@ -23,9 +23,41 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: #641f0a;
+  background-color: #4B0082;
   width: 31%;
 }
+
+label{
+  color: #4B0082;
+}
+
+hr{
+  background-color: #4B0082;
+  width: 100%;
+  height: 3px;
+}
+
+img{
+  width: 7%;
+  height:7%;
+  align-self: center;
+  padding-right: 15px;
+  padding-top: 15px;
+  margin-left: 450px;
+  float: left;
+  
+}
+
+.title{
+  padding:35px;
+  color: #4B0082;
+  font-family:Georgia, serif;
+  font-size: 30px;
+  background-color: rgba(131, 5, 143, 0.03);
+  
+}
+
+
 
 textarea {
   width: 100%;

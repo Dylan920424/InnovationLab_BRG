@@ -58,7 +58,8 @@ $(document).ready(function() {
 
 $(document).ready(function () {
   $("#jurisdiction").on("change", function () {
-    var selectedJurisdiction = $(this).val();
+    var selectedJurisdiction = $(this).val().toLowerCase();
+    console.log(selectedJurisdiction);
     if (selectedJurisdiction == "california") {
       $("#OPT-reminder").text("*this is a reminder for California");
     } else if (selectedJurisdiction == "tennessee") {

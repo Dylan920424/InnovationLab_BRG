@@ -35,9 +35,10 @@ app.listen(port, () => {
 });
 
 const { Configuration, OpenAIApi } = require("openai");
+require('dotenv').config()
 
 const configuration = new Configuration({
-  apiKey: "",
+  apiKey: process.env.API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
